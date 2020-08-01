@@ -6,5 +6,6 @@ The repository for my data science portfolio that can be found here: https://ebo
 Contains the files for the PGA analysis project. 
 <ol>
   <li><b>PGA_data_cleaning</b> is the data procesisng file</li>
-  <li><b>PGA_reg</b> the file containing the regression model</li>
+  <li><b>PGA_reg</b> the file containing the regression model</li> 
+  <li><b>pga_etl</b> is a web scraper and mongodb pipeline for golf stats</li>
 </ol>
