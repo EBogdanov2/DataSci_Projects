@@ -1,0 +1,40 @@
+1.	
+A) When looking at the order quantities column, most transactions are for 1,2,3 pairs of sneakers. There are outliers though that have orders for 2000 pairs. When considering this stark contrast, we need to use the median to ensure these outliers do not significantly alter the “average” we are looking for.
+B) I would report the median value of an order, as this will show what most order amounts are for without having outliers significantly influence the statistic.
+C) The median order amount is 284.0
+
+# Question 1
+import pandas as pd
+
+dataset = pd.read_csv('shopify.csv')
+
+print(dataset.head()) # see what the column names are
+
+print(dataset['order_amount'].mean()) # get the "incorrect" answer
+print(dataset['order_amount'].median()) # get our accurate answer
+
+2.	 
+A) 
+SELECT COUNT(DISTINCT OrderID) AS "Total Orders Shipped" FROM Orders 
+
+Total Orders Shipped: 196
+
+B)
+SELECT COUNT(DISTINCT o.OrderID) AS "Orders", o.EmployeeID, e.EmployeeID, e.LastName
+FROM Orders o , Employees e
+JOIN Employees ON o.EmployeeID = e.EmployeeID
+GROUP BY o.EmployeeID 
+ORDER BY Orders DESC
+
+Peacock has the most orders at 40
+
+C)
+SELECT COUNT(DISTINCT od.OrderID) AS "Orders", p.ProductName
+FROM Orders o , OrderDetails od, Customers c, Products p
+JOIN Orders ON od.OrderID = o.OrderID
+JOIN Customers ON o.CustomerID = c.CustomerID AND c.Country = "Germany"
+JOIN Products ON od.ProductID = p.ProductID
+GROUP BY p.ProductName
+ORDER BY Orders DESC
+
+The most ordered product in Germany is Gorgonzola Telino
