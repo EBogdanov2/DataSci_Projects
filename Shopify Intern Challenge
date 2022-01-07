@@ -15,9 +15,12 @@ print(dataset['order_amount'].median()) # get our accurate answer
 
 2.	 
 A) 
-SELECT COUNT(DISTINCT OrderID) AS "Total Orders Shipped" FROM Orders 
+SELECT COUNT(o.ShipperID)
+FROM Shippers AS s 
+    JOIN Orders AS o ON o.ShipperID = s.ShipperID
+WHERE s.ShipperName = "Speedy Express";
 
-Total Orders Shipped: 196
+Total Orders Shipped: 54
 
 B)
 SELECT COUNT(DISTINCT o.OrderID) AS "Orders", o.EmployeeID, e.EmployeeID, e.LastName
@@ -25,16 +28,19 @@ FROM Orders o , Employees e
 JOIN Employees ON o.EmployeeID = e.EmployeeID
 GROUP BY o.EmployeeID 
 ORDER BY Orders DESC
+LIMIT 1;
 
 Peacock has the most orders at 40
 
 C)
-SELECT COUNT(DISTINCT od.OrderID) AS "Orders", p.ProductName
-FROM Orders o , OrderDetails od, Customers c, Products p
-JOIN Orders ON od.OrderID = o.OrderID
-JOIN Customers ON o.CustomerID = c.CustomerID AND c.Country = "Germany"
-JOIN Products ON od.ProductID = p.ProductID
+SELECT p.ProductName
+FROM Products AS p
+    JOIN OrderDetails AS od ON od.ProductID = p.ProductID
+    JOIN Orders AS o ON o.OrderID = od.OrderID
+    JOIN Customers AS c ON c.CustomerID = o.CustomerID
+WHERE c.Country = "Germany"
 GROUP BY p.ProductName
-ORDER BY Orders DESC
+ORDER BY SUM(od.Quantity) DESC
+LIMIT 1;
 
-The most ordered product in Germany is Gorgonzola Telino
+The most ordered product in Germany is Boston Crab meat
